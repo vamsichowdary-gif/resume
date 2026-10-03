@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
+import Hero from "./Hero";
+import Footer from "./Footer";
 import "./App.css";
 
 const skills = [
@@ -90,9 +92,9 @@ const fallbackProjects = [
 
 const education = [
   {
-    stage: "B.Tech in Computer Science & Engineering",
+    stage: "B.Tech in Electronics & Communication Engineering",
     detail:
-      "Core focus on software architecture, distributed systems, data structures, and algorithms.",
+      "Rigorous grounding in computing systems, digital electronics, and algorithmic problem solving, translating directly into high-throughput backend design and low-latency database architecture.",
     year: "2020 — 2024",
   },
   {
@@ -168,94 +170,8 @@ function App() {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section className="hero" id="home">
-          <div className="hero-copy">
-            <div className="badge-status">
-              <span className="pulsing-dot" />
-              <span>AVAILABLE FOR FULL-STACK & BACKEND ROLES</span>
-            </div>
-
-            <h1>
-              Hi, I’m <br />
-              <span className="name-highlight">Potturu Vamsi.</span>
-            </h1>
-
-            <p className="hero-role">
-              Full-Stack & Backend Engineer <span>— Based in India</span>
-            </p>
-
-            <p className="hero-intro">
-              I specialize in robust backend systems, scalable REST APIs, and
-              responsive React web applications. Passionate about clean code,
-              high-throughput architecture, and intuitive UI designs.
-            </p>
-
-            <div className="hero-actions">
-              <a
-                className="btn btn-primary"
-                href="mailto:naiduvamsi489@gmail.com"
-              >
-                Get in touch <ArrowIcon />
-              </a>
-              <a
-                className="btn btn-outline"
-                href="https://github.com/vamsichowdary-gif"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub Profile <ArrowIcon />
-              </a>
-            </div>
-
-            <div className="hero-stats">
-              <div className="stat-item">
-                <strong>1+</strong>
-                <span>Years Exp.</span>
-              </div>
-              <div className="stat-separator" />
-              <div className="stat-item">
-                <strong>15+</strong>
-                <span>Projects Shipped</span>
-              </div>
-              <div className="stat-separator" />
-              <div className="stat-item">
-                <strong>100%</strong>
-                <span>Clean Code & APIs</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-visual">
-            <div className="visual-card">
-              <div className="portrait-frame">
-                <img
-                  src="https://vamsiportfolio.linkpc.net/og-preview.jpg"
-                  alt="Potturu Vamsi"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80";
-                  }}
-                />
-                <div className="portrait-gradient" />
-              </div>
-
-              <div className="floating-card status-badge">
-                <span className="dot active" />
-                <div>
-                  <strong>Backend Focus</strong>
-                  <p>Laravel · PostgreSQL · REST</p>
-                </div>
-              </div>
-
-              <div className="portrait-footer">
-                <span>SCALABLE ARCHITECTURE</span>
-                <span>PV / 2026</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Animated Particle & 3D Interactive Hero Section */}
+        <Hero imageSrc="/og-preview.jpg" />
 
         {/* About Section */}
         <section className="intro-strip" id="about">
@@ -263,7 +179,7 @@ function App() {
             <span className="section-badge">ABOUT PHILOSOPHY</span>
             <h2>
               Good software starts with <br />
-              <em>rigorous thinking & clean architecture.</em>
+              <em>rigorous thinking &amp; clean architecture.</em>
             </h2>
           </div>
           <p className="intro-text">
@@ -404,7 +320,7 @@ function App() {
         <section className="content-section" id="skills">
           <div className="section-header">
             <div>
-              <span className="section-badge">SKILLS & TOOLS</span>
+              <span className="section-badge">SKILLS &amp; TOOLS</span>
               <h2>Technical Toolkit</h2>
             </div>
             <span className="section-num">04 / STACK</span>
@@ -456,27 +372,7 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="footer">
-        <a className="wordmark" href="#home">
-          PV<span>.</span>
-        </a>
-        <p>
-          © {new Date().getFullYear()} Potturu Vamsi · Built with React &
-          Supabase
-        </p>
-        <div className="footer-links">
-          <a
-            href="https://github.com/vamsichowdary-gif"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub <ArrowIcon />
-          </a>
-          <a href="mailto:naiduvamsi489@gmail.com">
-            Email <ArrowIcon />
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

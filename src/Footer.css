@@ -1,0 +1,194 @@
+.pilot-wave-footer {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  background: #050816;
+  margin-top: 40px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+/* --- RISING WAVES --- */
+.waves-stage {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wave-line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 100%;
+  transform-origin: center bottom;
+}
+
+.wave-back {
+  fill: rgba(34, 211, 238, 0.06);
+  animation: waveRoll 14s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+.wave-front {
+  fill: rgba(7, 14, 34, 0.95);
+  stroke: rgba(34, 211, 238, 0.25);
+  stroke-width: 1;
+  animation: waveRoll 8s ease-in-out -1.5s infinite alternate;
+}
+
+@keyframes waveRoll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-40%);
+  }
+}
+
+/* --- SHELF CONTAINER --- */
+.footer-shelf {
+  position: relative;
+  z-index: 10;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- SOCIAL BUTTONS (PORTFOLIO THEMED) --- */
+.shelf-social-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.shelf-tag {
+  color: #64748b;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.shelf-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.social-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.social-dot:hover {
+  background: rgba(34, 211, 238, 0.12);
+  border-color: rgba(34, 211, 238, 0.5);
+  color: #22d3ee;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.25);
+}
+
+.dot-svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* --- PILOT HALFTONE NAME STAGE --- */
+.pilot-letters-track {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 880px;
+  margin: 8px 0 24px 0;
+  cursor: pointer;
+  user-select: none;
+  transition: gap 0.4s ease;
+}
+
+.pilot-letter {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: clamp(4.8rem, 13vw, 9.4rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  display: inline-block;
+  
+  /* Halftone Screen Pattern (Crisp 4px dot grid) */
+  background: radial-gradient(circle at center, #ffffff 40%, transparent 42%);
+  background-size: 4px 4px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.85;
+
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.25s ease;
+}
+
+/* Spreading animation across the track */
+.pilot-letters-track:hover .l-v {
+  transform: translateX(-35px);
+}
+.pilot-letters-track:hover .l-a {
+  transform: translateX(-18px);
+}
+.pilot-letters-track:hover .l-m {
+  transform: scale(1.02);
+}
+.pilot-letters-track:hover .l-s {
+  transform: translateX(18px);
+}
+.pilot-letters-track:hover .l-i {
+  transform: translateX(35px);
+}
+
+/* Direct Hover: Letter turns solid white cleanly without heavy blur */
+.pilot-letter:hover {
+  background: #ffffff !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  transform: translateY(-6px) scale(1.08) !important;
+  filter: none !important;
+}
+
+/* Baseline Bar */
+.footer-base {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #64748b;
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.base-tags {
+  display: flex;
+  gap: 8px;
+}
