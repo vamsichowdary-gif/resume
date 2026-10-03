@@ -21,6 +21,7 @@ const skills = [
     items: [
       "MySQL",
       "PostgreSQL",
+      "Supabase",
       "Git / GitHub",
       "Postman",
       "Linux",
@@ -29,7 +30,6 @@ const skills = [
   },
 ];
 
-// Dedicated Work Experience list
 const workExperiences = [
   {
     role: "Full-Stack / Backend Engineer",
@@ -58,7 +58,6 @@ const workExperiences = [
   },
 ];
 
-// Fallback projects if Supabase is still empty or loading
 const fallbackProjects = [
   {
     id: 1,
@@ -72,7 +71,7 @@ const fallbackProjects = [
     ],
     tags: ["Laravel", "React", "PostgreSQL", "AWS S3", "Redis"],
     github_url: "https://github.com/vamsichowdary-gif",
-    live_url: "https://github.com/vamsichowdary-gif",
+    live_url: "https://vamsiportfolio.linkpc.net/",
   },
   {
     id: 2,
@@ -86,26 +85,29 @@ const fallbackProjects = [
     ],
     tags: ["PHP", "Laravel", "MySQL", "Postman", "TailwindCSS"],
     github_url: "https://github.com/vamsichowdary-gif",
-    live_url: "https://github.com/vamsichowdary-gif",
+    live_url: "https://vamsiportfolio.linkpc.net/",
   },
 ];
 
 const education = [
   {
     stage: "B.Tech in Electronics & Communication Engineering",
+    institution: "Bachelor of Technology",
     detail:
       "Rigorous grounding in computing systems, digital electronics, and algorithmic problem solving, translating directly into high-throughput backend design and low-latency database architecture.",
     year: "2020 — 2024",
   },
   {
     stage: "Higher Secondary / Intermediate",
+    institution: "Board of Intermediate Education",
     detail:
-      "Rigorous focus on Mathematics, Physics, and Advanced Chemistry foundations.",
+      "Rigorous curriculum focused on advanced Mathematics, Physics, and analytical logic.",
     year: "2018 — 2020",
   },
   {
     stage: "Secondary School Certificate",
-    detail: "Graduated with distinction with high academic honors.",
+    institution: "State Board of Secondary Education",
+    detail: "Graduated with academic distinction.",
     year: "2018",
   },
 ];
@@ -164,9 +166,11 @@ function App() {
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
         </nav>
-        <a className="nav-contact" href="mailto:naiduvamsi489@gmail.com">
-          Let’s talk <ArrowIcon />
-        </a>
+        <div className="nav-actions">
+          <a className="nav-contact" href="mailto:naiduvamsi489@gmail.com">
+            Let’s talk <ArrowIcon />
+          </a>
+        </div>
       </header>
 
       <main>
@@ -185,8 +189,9 @@ function App() {
           <p className="intro-text">
             I craft reliable, maintainable web products—from optimized database
             schemas and resilient API routing to fast, reactive UI components.
-            Whether designing modular microservices or writing clean frontend
-            hooks, my priority is performance, modularity, and longevity.
+            With a core background in Electronics &amp; Communication Engineering,
+            I approach distributed web systems with analytical precision, focusing
+            on performance, modularity, and longevity.
           </p>
         </section>
 
@@ -254,17 +259,30 @@ function App() {
                     <span className="project-category">
                       {proj.period || "APPLICATION"}
                     </span>
-                    {proj.github_url && (
-                      <a
-                        href={proj.github_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="circle-icon-btn"
-                        aria-label="GitHub Repository"
-                      >
-                        <ArrowIcon />
-                      </a>
-                    )}
+                    <div className="project-links">
+                      {proj.github_url && (
+                        <a
+                          href={proj.github_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="circle-icon-btn"
+                          aria-label="GitHub Repository"
+                        >
+                          <ArrowIcon />
+                        </a>
+                      )}
+                      {proj.live_url && (
+                        <a
+                          href={proj.live_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="circle-icon-btn live-btn"
+                          aria-label="Live Demo"
+                        >
+                          🌐
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   <h3 className="project-title">{proj.title}</h3>
@@ -296,7 +314,7 @@ function App() {
         <section className="content-section" id="education">
           <div className="section-header">
             <div>
-              <span className="section-badge">BACKGROUND</span>
+              <span className="section-badge">ACADEMIC BACKGROUND</span>
               <h2>Education</h2>
             </div>
             <span className="section-num">03 / EDUCATION</span>
@@ -310,6 +328,7 @@ function App() {
                   <span className="edu-year">{edu.year}</span>
                 </div>
                 <h3>{edu.stage}</h3>
+                <span className="edu-inst">{edu.institution}</span>
                 <p>{edu.detail}</p>
               </div>
             ))}
@@ -362,16 +381,18 @@ function App() {
             </p>
           </div>
 
-          <a
-            className="btn btn-primary btn-large"
-            href="mailto:naiduvamsi489@gmail.com"
-          >
-            Say Hello <ArrowIcon />
-          </a>
+          <div className="contact-actions">
+            <a
+              className="btn btn-primary btn-large"
+              href="mailto:naiduvamsi489@gmail.com"
+            >
+              Say Hello <ArrowIcon />
+            </a>
+          </div>
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Custom Animated Waves & Pilot Typography Footer */}
       <Footer />
     </div>
   );
