@@ -210,7 +210,7 @@ function App() {
 
             <div className="hero-stats">
               <div className="stat-item">
-                <strong>2+</strong>
+                <strong>1+</strong>
                 <span>Years Exp.</span>
               </div>
               <div className="stat-separator" />
@@ -230,7 +230,7 @@ function App() {
             <div className="visual-card">
               <div className="portrait-frame">
                 <img
-                  src="https://github.com/vamsichowdary-gif.png"
+                  src="https://vamsiportfolio.linkpc.net/og-preview.jpg"
                   alt="Potturu Vamsi"
                   onError={(e) => {
                     e.target.onerror = null;
