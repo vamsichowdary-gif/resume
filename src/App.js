@@ -19,6 +19,7 @@ const skills = [
     items: [
       "MySQL",
       "PostgreSQL",
+      "Supabase",
       "Git / GitHub",
       "Postman",
       "Linux",
@@ -27,7 +28,6 @@ const skills = [
   },
 ];
 
-// Dedicated Work Experience list
 const workExperiences = [
   {
     role: "Full-Stack / Backend Engineer",
@@ -56,7 +56,6 @@ const workExperiences = [
   },
 ];
 
-// Fallback projects if Supabase is still empty or loading
 const fallbackProjects = [
   {
     id: 1,
@@ -70,7 +69,7 @@ const fallbackProjects = [
     ],
     tags: ["Laravel", "React", "PostgreSQL", "AWS S3", "Redis"],
     github_url: "https://github.com/vamsichowdary-gif",
-    live_url: "https://github.com/vamsichowdary-gif",
+    live_url: "https://vamsiportfolio.linkpc.net/",
   },
   {
     id: 2,
@@ -84,26 +83,29 @@ const fallbackProjects = [
     ],
     tags: ["PHP", "Laravel", "MySQL", "Postman", "TailwindCSS"],
     github_url: "https://github.com/vamsichowdary-gif",
-    live_url: "https://github.com/vamsichowdary-gif",
+    live_url: "https://vamsiportfolio.linkpc.net/",
   },
 ];
 
 const education = [
   {
-    stage: "B.Tech in Computer Science & Engineering",
+    stage: "B.Tech in Electronics & Communication Engineering",
+    institution: "Bachelor of Technology",
     detail:
-      "Core focus on software architecture, distributed systems, data structures, and algorithms.",
+      "Rigorous grounding in computing systems, digital electronics, and algorithmic problem solving, translating directly into high-throughput backend design and low-latency database architecture.",
     year: "2020 — 2024",
   },
   {
     stage: "Higher Secondary / Intermediate",
+    institution: "Board of Intermediate Education",
     detail:
-      "Rigorous focus on Mathematics, Physics, and Advanced Chemistry foundations.",
+      "Rigorous curriculum focused on advanced Mathematics, Physics, and analytical logic.",
     year: "2018 — 2020",
   },
   {
     stage: "Secondary School Certificate",
-    detail: "Graduated with distinction with high academic honors.",
+    institution: "State Board of Secondary Education",
+    detail: "Graduated with academic distinction.",
     year: "2018",
   },
 ];
@@ -119,6 +121,7 @@ function ArrowIcon() {
 function App() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -144,6 +147,12 @@ function App() {
     fetchProjects();
   }, []);
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("naiduvamsi489@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
   return (
     <div className="site-shell">
       {/* Background Ambient Glows */}
@@ -162,9 +171,11 @@ function App() {
           <a href="#education">Education</a>
           <a href="#skills">Skills</a>
         </nav>
-        <a className="nav-contact" href="mailto:naiduvamsi489@gmail.com">
-          Let’s talk <ArrowIcon />
-        </a>
+        <div className="nav-actions">
+          <a className="nav-contact" href="mailto:naiduvamsi489@gmail.com">
+            Let’s talk <ArrowIcon />
+          </a>
+        </div>
       </header>
 
       <main>
@@ -173,7 +184,7 @@ function App() {
           <div className="hero-copy">
             <div className="badge-status">
               <span className="pulsing-dot" />
-              <span>AVAILABLE FOR FULL-STACK & BACKEND ROLES</span>
+              <span>AVAILABLE FOR FULL-STACK &amp; BACKEND ROLES</span>
             </div>
 
             <h1>
@@ -182,7 +193,7 @@ function App() {
             </h1>
 
             <p className="hero-role">
-              Full-Stack & Backend Engineer <span>— Based in India</span>
+              Full-Stack &amp; Backend Engineer <span>— Based in India</span>
             </p>
 
             <p className="hero-intro">
@@ -198,13 +209,21 @@ function App() {
               >
                 Get in touch <ArrowIcon />
               </a>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCopyEmail}
+                title="Copy email to clipboard"
+              >
+                {copied ? "✓ Copied to Clipboard" : "Copy Email"}
+              </button>
               <a
                 className="btn btn-outline"
                 href="https://github.com/vamsichowdary-gif"
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub Profile <ArrowIcon />
+                GitHub <ArrowIcon />
               </a>
             </div>
 
@@ -221,7 +240,7 @@ function App() {
               <div className="stat-separator" />
               <div className="stat-item">
                 <strong>100%</strong>
-                <span>Clean Code & APIs</span>
+                <span>Clean Code &amp; APIs</span>
               </div>
             </div>
           </div>
@@ -230,12 +249,12 @@ function App() {
             <div className="visual-card">
               <div className="portrait-frame">
                 <img
-                  src="https://vamsiportfolio.linkpc.net/og-preview.jpg"
+                  src="https://vamsiportfolio.linkpc.net/og-preview.png"
                   alt="Potturu Vamsi"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
-                      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80";
+                      "https://vamsiportfolio.linkpc.net/og-preview.jpg";
                   }}
                 />
                 <div className="portrait-gradient" />
@@ -263,14 +282,15 @@ function App() {
             <span className="section-badge">ABOUT PHILOSOPHY</span>
             <h2>
               Good software starts with <br />
-              <em>rigorous thinking & clean architecture.</em>
+              <em>rigorous thinking &amp; clean architecture.</em>
             </h2>
           </div>
           <p className="intro-text">
             I craft reliable, maintainable web products—from optimized database
             schemas and resilient API routing to fast, reactive UI components.
-            Whether designing modular microservices or writing clean frontend
-            hooks, my priority is performance, modularity, and longevity.
+            With a core background in Electronics &amp; Communication Engineering,
+            I approach distributed web systems with analytical precision, focusing
+            on performance, modularity, and longevity.
           </p>
         </section>
 
@@ -338,17 +358,30 @@ function App() {
                     <span className="project-category">
                       {proj.period || "APPLICATION"}
                     </span>
-                    {proj.github_url && (
-                      <a
-                        href={proj.github_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="circle-icon-btn"
-                        aria-label="GitHub Repository"
-                      >
-                        <ArrowIcon />
-                      </a>
-                    )}
+                    <div className="project-links">
+                      {proj.github_url && (
+                        <a
+                          href={proj.github_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="circle-icon-btn"
+                          aria-label="GitHub Repository"
+                        >
+                          <ArrowIcon />
+                        </a>
+                      )}
+                      {proj.live_url && (
+                        <a
+                          href={proj.live_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="circle-icon-btn live-btn"
+                          aria-label="Live Demo"
+                        >
+                          🌐
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   <h3 className="project-title">{proj.title}</h3>
@@ -380,7 +413,7 @@ function App() {
         <section className="content-section" id="education">
           <div className="section-header">
             <div>
-              <span className="section-badge">BACKGROUND</span>
+              <span className="section-badge">ACADEMIC BACKGROUND</span>
               <h2>Education</h2>
             </div>
             <span className="section-num">03 / EDUCATION</span>
@@ -394,6 +427,7 @@ function App() {
                   <span className="edu-year">{edu.year}</span>
                 </div>
                 <h3>{edu.stage}</h3>
+                <span className="edu-inst">{edu.institution}</span>
                 <p>{edu.detail}</p>
               </div>
             ))}
@@ -404,7 +438,7 @@ function App() {
         <section className="content-section" id="skills">
           <div className="section-header">
             <div>
-              <span className="section-badge">SKILLS & TOOLS</span>
+              <span className="section-badge">SKILLS &amp; TOOLS</span>
               <h2>Technical Toolkit</h2>
             </div>
             <span className="section-num">04 / STACK</span>
@@ -446,12 +480,14 @@ function App() {
             </p>
           </div>
 
-          <a
-            className="btn btn-primary btn-large"
-            href="mailto:naiduvamsi489@gmail.com"
-          >
-            Say Hello <ArrowIcon />
-          </a>
+          <div className="contact-actions">
+            <a
+              className="btn btn-primary btn-large"
+              href="mailto:naiduvamsi489@gmail.com"
+            >
+              Say Hello <ArrowIcon />
+            </a>
+          </div>
         </section>
       </main>
 
@@ -461,7 +497,7 @@ function App() {
           PV<span>.</span>
         </a>
         <p>
-          © {new Date().getFullYear()} Potturu Vamsi · Built with React &
+          © {new Date().getFullYear()} Potturu Vamsi · Built with React &amp;
           Supabase
         </p>
         <div className="footer-links">
