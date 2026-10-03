@@ -71,7 +71,7 @@ function App() {
           design, and end-to-end reliability.
         </p>
         <div className="hero-actions">
-          <a href="mailto:naiduvamsi65@gmail.com" className="btn-primary">
+          <a href="mailto:naiduvamsi489@gmail.com" className="btn-primary">
             Get in Touch
           </a>
           <a
