@@ -60,10 +60,11 @@
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 24px 16px 24px;
+  padding: 24px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 /* --- SOCIAL HUB SECTION --- */
@@ -96,14 +97,14 @@
   cursor: pointer;
 }
 
-/* Hover bridge padding: covers the radius gap so the hover state remains active */
+/* Hover bridge padding: covers gap so hover is maintained */
 .radial-connect-wrapper::before {
   content: "";
   position: absolute;
-  top: -100px;
-  left: -100px;
-  right: -100px;
-  bottom: -100px;
+  top: -95px;
+  left: -95px;
+  right: -95px;
+  bottom: -95px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 10;
@@ -149,7 +150,6 @@
   transform: rotate(45deg);
 }
 
-/* Satellites container */
 .radial-satellites {
   position: absolute;
   top: 50%;
@@ -160,7 +160,6 @@
   z-index: 20;
 }
 
-/* Satellite button styling */
 .radial-satellite-dot {
   position: absolute;
   top: -19px;
@@ -178,11 +177,12 @@
   backdrop-filter: blur(12px);
   opacity: 0;
   transform: translate(0, 0) scale(0.2);
-  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.2s ease,
-              background 0.2s ease,
-              color 0.2s ease,
-              box-shadow 0.2s ease;
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
   pointer-events: none;
 }
 
@@ -191,7 +191,6 @@
   height: 17px;
 }
 
-/* Outward expansion */
 .radial-connect-wrapper:hover .radial-satellites,
 .radial-connect-wrapper.is-open .radial-satellites {
   pointer-events: auto;
@@ -217,20 +216,33 @@
 .flow-field-container {
   width: 100%;
   max-width: 950px;
-  height: 200px;
-  margin: 12px 0 20px 0;
+  height: 180px;
+  margin: 10px 0 16px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   cursor: pointer;
   z-index: 5;
+  box-sizing: border-box;
 }
 
 .flow-field-canvas {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 600px) {
+  .flow-field-container {
+    height: 120px;
+    margin: 6px 0 10px 0;
+  }
+
+  .footer-shelf {
+    padding: 16px 12px 14px 12px;
+  }
 }
 
 /* --- BASELINE BAR --- */

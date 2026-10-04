@@ -88,7 +88,7 @@ const SocialConnectHub = () => {
   ];
 
   const total = socials.length;
-  const radius = 80;
+  const radius = 78;
 
   return (
     <div
@@ -134,51 +134,69 @@ const SocialConnectHub = () => {
 
 // --- Pixel Flow Field Text Canvas ---
 const PixelFlowField = ({ text = "VAMSI" }) => {
+  const containerRef = useRef(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
+    const ctx = canvas.getContext("2d");
     let animationFrameId;
     let particles = [];
-    const mouse = { x: -9999, y: -9999, radius: 95, isHovered: false };
+    const mouse = { x: -9999, y: -9999, radius: 80, isHovered: false };
 
     const init = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = rect.width;
-      const height = rect.height;
+      const rect = container.getBoundingClientRect();
+      const width = Math.floor(rect.width);
+      const height = Math.floor(rect.height);
 
+      // SAFETY GUARD: Do not run if width or height is 0 (prevents getImageData crash)
+      if (width <= 0 || height <= 0) return;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const offscreen = document.createElement("canvas");
-      const offCtx = offscreen.getContext("2d");
       offscreen.width = width;
       offscreen.height = height;
+      const offCtx = offscreen.getContext("2d");
+      if (!offCtx) return;
 
-      const fontSize = Math.min(width / (text.length * 0.72), height * 0.85);
+      // Responsive font size calculation
+      const isMobile = width < 520;
+      let fontSize = isMobile ? width * 0.22 : Math.min(width * 0.17, height * 0.75);
+
       offCtx.font = `900 ${fontSize}px "Georgia", "Times New Roman", serif`;
+      
+      // Measure and scale down font size if it exceeds bounds on small devices
+      let measuredWidth = offCtx.measureText(text).width;
+      const maxAllowed = width * 0.94;
+      if (measuredWidth > maxAllowed) {
+        fontSize = Math.floor(fontSize * (maxAllowed / measuredWidth));
+        offCtx.font = `900 ${fontSize}px "Georgia", "Times New Roman", serif`;
+      }
+
       offCtx.fillStyle = "#ffffff";
       offCtx.textAlign = "center";
       offCtx.textBaseline = "middle";
-      offCtx.letterSpacing = "8px";
       offCtx.fillText(text, width / 2, height / 2);
 
       const imgData = offCtx.getImageData(0, 0, width, height).data;
       particles = [];
 
-      const gap = width < 640 ? 4 : 5;
+      // Grid gap - 3.5px for crisp resolution on phones
+      const gap = isMobile ? 3.5 : 5;
 
       for (let y = 0; y < height; y += gap) {
         for (let x = 0; x < width; x += gap) {
-          const index = (y * width + x) * 4;
+          const index = (Math.floor(y) * width + Math.floor(x)) * 4;
           const alpha = imgData[index + 3];
 
-          if (alpha > 128) {
+          if (alpha > 125) {
             particles.push({
               originX: x,
               originY: y,
@@ -186,7 +204,7 @@ const PixelFlowField = ({ text = "VAMSI" }) => {
               y: y,
               vx: 0,
               vy: 0,
-              size: gap * 0.62,
+              size: gap * 0.65,
               phase: x * 0.05 + y * 0.05,
             });
           }
@@ -197,53 +215,57 @@ const PixelFlowField = ({ text = "VAMSI" }) => {
     let time = 0;
     const animate = () => {
       time += 0.04;
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
+      const rect = container.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      if (width > 0 && height > 0) {
+        ctx.clearRect(0, 0, width, height);
 
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const dist = Math.hypot(dx, dy);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
 
-        let targetX = p.originX;
-        let targetY = p.originY;
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.hypot(dx, dy);
 
-        // Apply interaction only to pixels near cursor
-        if (mouse.isHovered && dist < mouse.radius * 1.4) {
-          const influence = 1 - dist / (mouse.radius * 1.4);
+          let targetX = p.originX;
+          let targetY = p.originY;
 
-          const waveX = Math.sin(time + p.originY * 0.07 + p.phase) * 3.5 * influence;
-          const waveY = Math.cos(time + p.originX * 0.07 + p.phase) * 3.5 * influence;
-          targetX += waveX;
-          targetY += waveY;
+          // Liquid ripple & dispersal only around the cursor
+          if (mouse.isHovered && dist < mouse.radius * 1.35) {
+            const influence = 1 - dist / (mouse.radius * 1.35);
+            const waveX = Math.sin(time + p.originY * 0.07 + p.phase) * 3 * influence;
+            const waveY = Math.cos(time + p.originX * 0.07 + p.phase) * 3 * influence;
+            targetX += waveX;
+            targetY += waveY;
 
-          if (dist < mouse.radius) {
-            const force = (1 - dist / mouse.radius) * 13;
-            const angle = Math.atan2(dy, dx);
-            p.vx -= Math.cos(angle) * force;
-            p.vy -= Math.sin(angle) * force;
+            if (dist < mouse.radius) {
+              const force = (1 - dist / mouse.radius) * 12;
+              const angle = Math.atan2(dy, dx);
+              p.vx -= Math.cos(angle) * force;
+              p.vy -= Math.sin(angle) * force;
+            }
           }
+
+          p.vx += (targetX - p.x) * 0.14;
+          p.vy += (targetY - p.y) * 0.14;
+          p.vx *= 0.72;
+          p.vy *= 0.72;
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (mouse.isHovered && dist < mouse.radius * 0.65) {
+            ctx.fillStyle = "#ffffff";
+          } else {
+            ctx.fillStyle = "rgba(125, 211, 252, 0.9)";
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+          ctx.fill();
         }
-
-        p.vx += (targetX - p.x) * 0.12;
-        p.vy += (targetY - p.y) * 0.12;
-        p.vx *= 0.74;
-        p.vy *= 0.74;
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (mouse.isHovered && dist < mouse.radius * 0.65) {
-          ctx.fillStyle = "#ffffff";
-        } else {
-          ctx.fillStyle = "rgba(125, 211, 252, 0.88)";
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
-        ctx.fill();
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -271,25 +293,26 @@ const PixelFlowField = ({ text = "VAMSI" }) => {
       }
     };
 
+    // ResizeObserver ensures initialization occurs only after parent has actual dimensions
+    const resizeObserver = new ResizeObserver(() => {
+      init();
+    });
+    resizeObserver.observe(container);
+
     init();
     animate();
 
-    window.addEventListener("resize", init);
     canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseenter", () => {
-      mouse.isHovered = true;
-    });
+    canvas.addEventListener("mouseenter", () => { mouse.isHovered = true; });
     canvas.addEventListener("mouseleave", handleMouseLeave);
     canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
     canvas.addEventListener("touchend", handleMouseLeave);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", init);
+      resizeObserver.disconnect();
       canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseenter", () => {
-        mouse.isHovered = true;
-      });
+      canvas.removeEventListener("mouseenter", () => { mouse.isHovered = true; });
       canvas.removeEventListener("mouseleave", handleMouseLeave);
       canvas.removeEventListener("touchmove", handleTouchMove);
       canvas.removeEventListener("touchend", handleMouseLeave);
@@ -297,7 +320,7 @@ const PixelFlowField = ({ text = "VAMSI" }) => {
   }, [text]);
 
   return (
-    <div className="flow-field-container">
+    <div ref={containerRef} className="flow-field-container">
       <canvas ref={canvasRef} className="flow-field-canvas" />
     </div>
   );
