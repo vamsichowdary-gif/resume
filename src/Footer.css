@@ -141,7 +141,7 @@
   background: radial-gradient(circle at center, #ffffff 40%, transparent 42%);
   background-size: 4px 4px;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: #38bdf85c;
   opacity: 0.85;
 
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -167,7 +167,7 @@
 
 /* Direct Hover: Letter turns solid white cleanly without heavy blur */
 .pilot-letter:hover {
-  background: #ffffff !important;
+  background: #38bdf8 !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: #ffffff !important;
   opacity: 1 !important;
